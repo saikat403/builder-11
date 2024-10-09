@@ -2,8 +2,8 @@
 import React, { useState } from "react";
 import { DndProvider, useDrag, useDrop } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
+import TestSidebar from "./TestSidebar";
 
-// Draggable Widget (to drag from the left sidebar)
 function DraggableWidget({ id, label, style }) {
     const [{ isDragging }, drag] = useDrag(() => ({
         type: "WIDGET",
@@ -54,128 +54,6 @@ function DraggableElement({ id, label, style, onClick }) {
     );
 }
 
-// Sidebar for updating styles of the selected element
-function Sidebar({ elementStyle, onStyleChange }) {
-    const handleChange = (e) => {
-        onStyleChange(e.target.name, e.target.value);
-    };
-
-    return (
-        <div className="w-80 p-4 border-l border-gray-300">
-            <h3 className="text-xl font-semibold mb-4">Element Styles</h3>
-
-            <div className="mb-4">
-                <label className="block text-sm font-medium">X Width</label>
-                <input
-                    type="text"
-                    name="width"
-                    value={elementStyle.width || ""}
-                    onChange={handleChange}
-                    className="w-full p-2 mt-1 border rounded-md"
-                />
-            </div>
-
-            <div className="mb-4">
-                <label className="block text-sm font-medium">Height</label>
-                <input
-                    type="text"
-                    name="height"
-                    value={elementStyle.height || ""}
-                    onChange={handleChange}
-                    className="w-full p-2 mt-1 border rounded-md"
-                />
-            </div>
-
-            <div className="mb-4">
-                <label className="block text-sm font-medium">Background Color</label>
-                <input
-                    type="text"
-                    name="backgroundColor"
-                    value={elementStyle.backgroundColor || ""}
-                    onChange={handleChange}
-                    className="w-full p-2 mt-1 border rounded-md"
-                    placeholder="Enter color (e.g., #ff0000)"
-                />
-            </div>
-
-            {/* Added more customization options */}
-            <div className="mb-4">
-                <label className="block text-sm font-medium">Font Size</label>
-                <input
-                    type="text"
-                    name="fontSize"
-                    value={elementStyle.fontSize || ""}
-                    onChange={handleChange}
-                    className="w-full p-2 mt-1 border rounded-md"
-                    placeholder="Enter font size (e.g., 16px)"
-                />
-            </div>
-
-            <div className="mb-4">
-                <label className="block text-sm font-medium">Padding</label>
-                <input
-                    type="text"
-                    name="padding"
-                    value={elementStyle.padding || ""}
-                    onChange={handleChange}
-                    className="w-full p-2 mt-1 border rounded-md"
-                    placeholder="Enter padding (e.g., 10px)"
-                />
-            </div>
-
-            <div className="mb-4">
-                <label className="block text-sm font-medium">Margin</label>
-                <input
-                    type="text"
-                    name="margin"
-                    value={elementStyle.margin || ""}
-                    onChange={handleChange}
-                    className="w-full p-2 mt-1 border rounded-md"
-                    placeholder="Enter margin (e.g., 10px)"
-                />
-            </div>
-
-            {/* Border Radius */}
-            <div className="mb-4">
-                <label className="block text-sm font-medium">Border Radius</label>
-                <input
-                    type="text"
-                    name="borderRadius"
-                    value={elementStyle.borderRadius || ""}
-                    onChange={handleChange}
-                    className="w-full p-2 mt-1 border rounded-md"
-                    placeholder="Enter border radius (e.g., 10px)"
-                />
-            </div>
-
-            {/* Border Width */}
-            <div className="mb-4">
-                <label className="block text-sm font-medium">Border Width</label>
-                <input
-                    type="text"
-                    name="borderWidth"
-                    value={elementStyle.borderWidth || ""}
-                    onChange={handleChange}
-                    className="w-full p-2 mt-1 border rounded-md"
-                    placeholder="Enter border width (e.g., 2px)"
-                />
-            </div>
-
-            {/* Border Color */}
-            <div className="mb-4">
-                <label className="block text-sm font-medium">Border Color</label>
-                <input
-                    type="text"
-                    name="borderColor"
-                    value={elementStyle.borderColor || ""}
-                    onChange={handleChange}
-                    className="w-full p-2 mt-1 border rounded-md"
-                    placeholder="Enter border color (e.g., #ff0000)"
-                />
-            </div>
-        </div>
-    );
-}
 
 // Main component where elements are dropped and styled
 function TestBuild1() {
@@ -257,7 +135,7 @@ function TestBuild1() {
             </div>
 
             {selectedElementId && (
-                <Sidebar elementStyle={currentStyle} onStyleChange={handleStyleChange} />
+                <TestSidebar elementStyle={currentStyle} onStyleChange={handleStyleChange} />
             )}
         </div>
     );
