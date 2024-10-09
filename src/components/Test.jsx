@@ -16,11 +16,8 @@ function DraggableWidget({ id, label, style }) {
     return (
         <div
             ref={drag}
+            className="p-2 m-2 bg-gray-200 cursor-move opacity-100"
             style={{
-                padding: "10px",
-                margin: "5px",
-                background: "lightgray",
-                cursor: "move",
                 opacity: isDragging ? 0.5 : 1,
             }}
         >
@@ -42,13 +39,13 @@ function DraggableElement({ id, label, style, onClick }) {
     return (
         <div
             ref={drag}
+            className="m-4 p-4 bg-blue-200 cursor-move"
             style={{
                 ...style,
                 opacity: isDragging ? 0.5 : 1,
-                cursor: "move",
-                margin: "10px",
-                padding: "10px",
                 backgroundColor: style.backgroundColor || "lightblue", // Ensure background is applied here
+                borderRadius: style.borderRadius || "0px", // Added border radius
+                border: `${style.borderWidth || "1px"} solid ${style.borderColor || "#000"}`, // Added border width and color
             }}
             onClick={() => onClick(id)} // Click to update styles
         >
@@ -64,38 +61,118 @@ function Sidebar({ elementStyle, onStyleChange }) {
     };
 
     return (
-        <div style={{ width: "200px", padding: "10px", borderLeft: "1px solid #ccc" }}>
-            <h3>Element Styles</h3>
-            <label>
-                Width:
+        <div className="w-80 p-4 border-l border-gray-300">
+            <h3 className="text-xl font-semibold mb-4">Element Styles</h3>
+
+            <div className="mb-4">
+                <label className="block text-sm font-medium">X Width</label>
                 <input
                     type="text"
                     name="width"
                     value={elementStyle.width || ""}
                     onChange={handleChange}
+                    className="w-full p-2 mt-1 border rounded-md"
                 />
-            </label>
-            <br />
-            <label>
-                Height:
+            </div>
+
+            <div className="mb-4">
+                <label className="block text-sm font-medium">Height</label>
                 <input
                     type="text"
                     name="height"
                     value={elementStyle.height || ""}
                     onChange={handleChange}
+                    className="w-full p-2 mt-1 border rounded-md"
                 />
-            </label>
-            <br />
-            <label>
-                Background Color:
+            </div>
+
+            <div className="mb-4">
+                <label className="block text-sm font-medium">Background Color</label>
                 <input
                     type="text"
                     name="backgroundColor"
                     value={elementStyle.backgroundColor || ""}
                     onChange={handleChange}
+                    className="w-full p-2 mt-1 border rounded-md"
                     placeholder="Enter color (e.g., #ff0000)"
                 />
-            </label>
+            </div>
+
+            {/* Added more customization options */}
+            <div className="mb-4">
+                <label className="block text-sm font-medium">Font Size</label>
+                <input
+                    type="text"
+                    name="fontSize"
+                    value={elementStyle.fontSize || ""}
+                    onChange={handleChange}
+                    className="w-full p-2 mt-1 border rounded-md"
+                    placeholder="Enter font size (e.g., 16px)"
+                />
+            </div>
+
+            <div className="mb-4">
+                <label className="block text-sm font-medium">Padding</label>
+                <input
+                    type="text"
+                    name="padding"
+                    value={elementStyle.padding || ""}
+                    onChange={handleChange}
+                    className="w-full p-2 mt-1 border rounded-md"
+                    placeholder="Enter padding (e.g., 10px)"
+                />
+            </div>
+
+            <div className="mb-4">
+                <label className="block text-sm font-medium">Margin</label>
+                <input
+                    type="text"
+                    name="margin"
+                    value={elementStyle.margin || ""}
+                    onChange={handleChange}
+                    className="w-full p-2 mt-1 border rounded-md"
+                    placeholder="Enter margin (e.g., 10px)"
+                />
+            </div>
+
+            {/* Border Radius */}
+            <div className="mb-4">
+                <label className="block text-sm font-medium">Border Radius</label>
+                <input
+                    type="text"
+                    name="borderRadius"
+                    value={elementStyle.borderRadius || ""}
+                    onChange={handleChange}
+                    className="w-full p-2 mt-1 border rounded-md"
+                    placeholder="Enter border radius (e.g., 10px)"
+                />
+            </div>
+
+            {/* Border Width */}
+            <div className="mb-4">
+                <label className="block text-sm font-medium">Border Width</label>
+                <input
+                    type="text"
+                    name="borderWidth"
+                    value={elementStyle.borderWidth || ""}
+                    onChange={handleChange}
+                    className="w-full p-2 mt-1 border rounded-md"
+                    placeholder="Enter border width (e.g., 2px)"
+                />
+            </div>
+
+            {/* Border Color */}
+            <div className="mb-4">
+                <label className="block text-sm font-medium">Border Color</label>
+                <input
+                    type="text"
+                    name="borderColor"
+                    value={elementStyle.borderColor || ""}
+                    onChange={handleChange}
+                    className="w-full p-2 mt-1 border rounded-md"
+                    placeholder="Enter border color (e.g., #ff0000)"
+                />
+            </div>
         </div>
     );
 }
@@ -118,8 +195,6 @@ function TestBuild1() {
     };
 
     const handleStyleChange = (property, value) => {
-        console.log(`Updating style: ${property} to ${value}`); // Debugging log
-
         setCurrentStyle((prevStyle) => ({
             ...prevStyle,
             [property]: value,
@@ -147,10 +222,10 @@ function TestBuild1() {
     }));
 
     return (
-        <div style={{ display: "flex", height: "100vh" }}>
+        <div className="flex h-screen">
             {/* Left Sidebar with widgets */}
-            <div style={{ width: "200px", padding: "20px", borderRight: "1px solid #ccc" }}>
-                <h3>Widgets</h3>
+            <div className="w-64 p-6 border-r border-gray-300 bg-gray-50">
+                <h3 className="text-xl font-semibold mb-4">Widgets</h3>
                 {widgets.map((widget) => (
                     <DraggableWidget
                         key={widget.id}
@@ -164,13 +239,12 @@ function TestBuild1() {
             {/* Main View with dropped elements */}
             <div
                 ref={drop}
+                className="flex-1 p-6 bg-gray-100"
                 style={{
-                    flex: 1,
-                    padding: "20px",
                     background: canDrop ? (isOver ? "lightyellow" : "lightgreen") : "lightgray",
                 }}
             >
-                <h3>Main View</h3>
+                <h3 className="text-2xl font-semibold mb-4">Main View</h3>
                 {elements.map((element) => (
                     <DraggableElement
                         key={element.id}
@@ -182,7 +256,6 @@ function TestBuild1() {
                 ))}
             </div>
 
-            {/* Right Sidebar for styling selected element */}
             {selectedElementId && (
                 <Sidebar elementStyle={currentStyle} onStyleChange={handleStyleChange} />
             )}
@@ -190,13 +263,10 @@ function TestBuild1() {
     );
 }
 
-// Main App Component
-export default function TestBuild() {
+export default function BuildPage() {
     return (
-        <div>
-            <DndProvider backend={HTML5Backend}>
-                <TestBuild1 />
-            </DndProvider>
-        </div>
+        <DndProvider backend={HTML5Backend}>
+            <TestBuild1 />
+        </DndProvider>
     );
 }

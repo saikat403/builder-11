@@ -2,25 +2,19 @@ import React, { useState } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
 import { ItemTypes } from './ItemTypes';
 
-export const Canvas = ({ styleConfig }) => {
+export const Canvas = () => {
   const [droppedComponents, setDroppedComponents] = useState([]);
-
-  console.log(droppedComponents);
 
   const [{ canDrop, isOver }, drop] = useDrop(() => ({
     accept: [ItemTypes.BOX, ItemTypes.CONTAINER, ItemTypes.DUSTBIN],
     drop: (item, monitor) => {
-      const didDrop = monitor.didDrop();
-
+      const didDrop = monitor.didDrop()
+      
       if (didDrop) {
-        return;
+        return
       }
 
-      setDroppedComponents((prevComponents) => [
-        ...prevComponents,
-        { id: item?.containerId, component: item.component, style: styleConfig }
-      ]);
-
+      setDroppedComponents((prevComponents) => [...prevComponents, item.component]);
       return { name: 'Contain' };
     },
     collect: (monitor) => ({
@@ -31,8 +25,8 @@ export const Canvas = ({ styleConfig }) => {
 
   return (
     <div ref={drop} className="canvas" style={{ height: '100vh' }}>
-      {droppedComponents.map(({ component: Component, style }, index) => (
-        <div key={index} style={style}>
+      {droppedComponents.map((Component, index) => (
+        <div key={index}>
           {Component}
         </div>
       ))}
